@@ -87,7 +87,7 @@ public class FrameEjercicio3 extends JFrame implements ActionListener, ItemListe
         add(cbA);
 
         cbB = new JComboBox<String>();
-        cbB.setToolTipText("Indice seleccionado de ComboBox B: " + cbB.getSelectedIndex());
+        cbB.setToolTipText("ComboBox B"); // Empiezo con el Tooltip sólo en ComboBox B porque no tiene elementos añadidos
         cbB.addItemListener(this);
         add(cbB);
 
@@ -216,6 +216,7 @@ public class FrameEjercicio3 extends JFrame implements ActionListener, ItemListe
                 txf2.setText("");
                 lblCantidadElementos.setText("Nº de elementos en el 1er ComboBox : " + cbA.getItemCount()); // Actualizo la etiqueta que cuenta los elementos de cbA
                 lblIndiceSeleccionado.setText(""); // Actualizo la etiqueta para que no indique nada, ya que los combobox no tendrán elementos
+                cbB.setToolTipText("ComboBox B"); // Actualizo el ToolTip de cbB
             }
         }
 

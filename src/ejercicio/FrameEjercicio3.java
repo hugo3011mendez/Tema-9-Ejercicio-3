@@ -32,6 +32,22 @@ public class FrameEjercicio3 extends JFrame implements ActionListener, ItemListe
         return valoresTXF;
     }
 
+    /**
+     * Traspasa el item seleccionado de un ComboBox a otro
+     * 
+     * @param cbTraspasador ComboBox que va a pasar su item al otro
+     * @param cbTraspasado ComboBox que va a recibir el item seleccionado
+     */
+    public void traspasarItem(JComboBox cbTraspasador, JComboBox cbTraspasado){
+        if(cbTraspasador.getSelectedItem() != null){ // Acciones a realizar si se ha seleccionado un item en el ComboBox
+            cbTraspasado.addItem(cbTraspasador.getSelectedItem()); // Primero añado el item seleccionado al ComboBox
+            cbTraspasador.removeItem(cbTraspasador.getSelectedItem()); // Después elimino el item seleccionado de su propio ComboBox
+        }
+        else{ // Si no se ha seleccionado un item del ComboBox, muestra un mensaje de error
+            JOptionPane.showMessageDialog(null, "No hay ningún elemento seleccionado en el ComboBox traspasador!", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     JComboBox cbA, cbB;
     JButton btnAnadir, btnQuitar, btnTraspasarA, btnTraspasarB;
     JTextField txf1, txf2;
@@ -65,10 +81,12 @@ public class FrameEjercicio3 extends JFrame implements ActionListener, ItemListe
         MouseHandler mh = new MouseHandler();
 
         cbA = new JComboBox<String>();
+        cbA.addItem("Hola");
         cbA.addItemListener(this);
         add(cbA);
 
         cbB = new JComboBox<String>();
+        cbB.addItem("Buenas");
         cbB.addItemListener(this);
         add(cbB);
 
@@ -151,6 +169,12 @@ public class FrameEjercicio3 extends JFrame implements ActionListener, ItemListe
                     JOptionPane.showMessageDialog(null, "No hay ningún elemento del ComboBox que empiece por " + txf2.getText(), "No se ha quitado nada", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
+        }
+        else if(e.getSource() == btnTraspasarA){ // Acciones a realizar si se pulsa el botón de trasapasar items del segundo a primer ComboBox
+            traspasarItem(cbB, cbA); // Llamo a la función que hace que el item seleccionado de un ComboBox se traspase al otro
+        }
+        else if(e.getSource() == btnTraspasarB){
+            traspasarItem(cbA, cbB); // Llamo a la función que hace que el item seleccionado de un ComboBox se traspase al otro
         }
     }
 

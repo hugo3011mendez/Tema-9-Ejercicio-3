@@ -55,7 +55,7 @@ public class FrameEjercicio3 extends JFrame implements ActionListener, ItemListe
     Timer temporizador;
 
     ArrayList<String> valoresTextField = new ArrayList<>(); // Creo una colección donde se guardarán los diferentes valores que contendrá el TextField indicado
-    int minutos, segundos; // Variables para el timer
+    int segundos; // Variable para controlar el timer
 
     public FrameEjercicio3() {
         super("Ejercicio 3");
@@ -82,38 +82,48 @@ public class FrameEjercicio3 extends JFrame implements ActionListener, ItemListe
         MouseHandler mh = new MouseHandler();
 
         cbA = new JComboBox<String>();
+        cbA.setToolTipText("ComboBox A");
         cbA.addItemListener(this);
         add(cbA);
 
         cbB = new JComboBox<String>();
+        cbB.setToolTipText("Indice seleccionado de ComboBox B: " + cbB.getSelectedIndex());
         cbB.addItemListener(this);
         add(cbB);
 
         btnAnadir = new JButton("Añadir al 1er ComboBox");
         btnAnadir.setSize(btnAnadir.getPreferredSize());
+        btnAnadir.setToolTipText("Añade los elementos escritos en el primer TextField al ComboBox A");
         btnAnadir.addActionListener(this);
         add(btnAnadir);
 
         btnQuitar = new JButton("Quitar del 1er ComboBox");
         btnQuitar.setSize(btnQuitar.getPreferredSize());
+        btnQuitar.setToolTipText("Quita el elemento seleccionado del ComboBox A");
         btnQuitar.addActionListener(this);
         btnQuitar.addMouseListener(mh);
         add(btnQuitar);
 
         btnTraspasarA = new JButton("Traspasar al 1er ComboBox");
         btnTraspasarA.setSize(btnTraspasarA.getPreferredSize());
+        btnTraspasarA.setToolTipText("Traspasa el elemento seleccionado del ComboBox B al ComboBox A");
         btnTraspasarA.addActionListener(this);
         add(btnTraspasarA);
 
         btnTraspasarB = new JButton("Traspasar al 2o ComboBox");
         btnTraspasarB.setSize(btnTraspasarB.getPreferredSize());
+        btnTraspasarB.setToolTipText("Traspasa el elemento seleccionado del ComboBox A al ComboBox B");
         btnTraspasarB.addActionListener(this);
         add(btnTraspasarB);
 
         txf1 = new JTextField(45);
+        txf1.setToolTipText("Escribe los elementos que quieras entre ';' para añadirlos al ComboBox A");
+        txf1.addActionListener(this);
         add(txf1);
 
         txf2 = new JTextField(45);
+        txf2.setToolTipText("Sirve para eliminar los elementos del ComboBox A que empiecen por lo que escribas aquí");
+        txf2.addActionListener(this);
         add(txf2);
 
         lblCantidadElementos = new JLabel("Nº de elementos en el 1er ComboBox : " + cbA.getItemCount());
@@ -123,7 +133,6 @@ public class FrameEjercicio3 extends JFrame implements ActionListener, ItemListe
         add(lblIndiceSeleccionado);
 
         // Le doy un valor inicial a los minutos y los segundos, y empiezo el contador cuando se abra el formulario
-        minutos = 0;
         segundos = 0;
         temporizador = new Timer(1000, this);
         temporizador.start();
@@ -188,19 +197,37 @@ public class FrameEjercicio3 extends JFrame implements ActionListener, ItemListe
             traspasarItem(cbB, cbA); // Llamo a la función que hace que el item seleccionado de un ComboBox se traspase al otro
             lblCantidadElementos.setText("Nº de elementos en el 1er ComboBox : " + cbA.getItemCount()); // Actualizo la etiqueta que cuenta los elementos de cbA
             lblIndiceSeleccionado.setText("Indice seleccionado : " + cbA.getSelectedIndex()); // Actualizo la etiqueta que indica el índice seleccionado de cbA
+            cbB.setToolTipText("Indice seleccionado de ComboBox B: " + cbB.getSelectedIndex()); // Actualizo el ToolTip de cbB
         }
         else if(e.getSource() == btnTraspasarB){
             traspasarItem(cbA, cbB); // Llamo a la función que hace que el item seleccionado de un ComboBox se traspase al otro
             lblCantidadElementos.setText("Nº de elementos en el 1er ComboBox : " + cbA.getItemCount()); // Actualizo la etiqueta que cuenta los elementos de cbA
             lblIndiceSeleccionado.setText("Indice seleccionado : " + cbA.getSelectedIndex()); // Actualizo la etiqueta que indica el índice seleccionado de cbA
+            cbB.setToolTipText("Indice seleccionado de ComboBox B: " + cbB.getSelectedIndex()); // Actualizo el ToolTip de cbB
         }
         else if(e.getSource() == temporizador){
-            
+            segundos ++;
+
+            if(segundos == 60){
+                segundos = 0; // Reinicio el contador al llegar a 60 y hacer un reset
+                cbA.removeAllItems();
+                cbB.removeAllItems();
+                txf1.setText("");
+                txf2.setText("");
+                lblCantidadElementos.setText("Nº de elementos en el 1er ComboBox : " + cbA.getItemCount()); // Actualizo la etiqueta que cuenta los elementos de cbA
+                lblIndiceSeleccionado.setText(""); // Actualizo la etiqueta para que no indique nada, ya que los combobox no tendrán elementos
+            }
         }
+
+        segundos = 0; // Reinicio el contador al realizar una acción
     }
 
     @Override
     public void itemStateChanged(ItemEvent e) {
+        segundos = 0; // Reinicio el contador al realizar una acción
+
+        cbB.setToolTipText("Indice seleccionado de ComboBox B: " + cbB.getSelectedIndex()); // Actualizo el ToolTip de cbB
+
         if(e.getSource() == cbA){ // Si se hace cualquier acción en cbA, que se actualice la etiqueta que controla el índice seleccionado
             lblIndiceSeleccionado.setText("Indice seleccionado : " + cbA.getSelectedIndex()); // Actualizo la etiqueta que indica el índice seleccionado de cbA
         }

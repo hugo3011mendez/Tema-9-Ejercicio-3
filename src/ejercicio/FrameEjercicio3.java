@@ -159,9 +159,6 @@ public class FrameEjercicio3 extends JFrame implements ActionListener, ItemListe
                 for (int i = 0; i < valoresTextField.size(); i++) {
                     cbA.addItem(valoresTextField.get(i));
                 }
-
-                lblCantidadElementos.setText("Nº de elementos en el 1er ComboBox : " + cbA.getItemCount()); // Actualizo la etiqueta que cuenta los elementos de cbA
-                lblIndiceSeleccionado.setText("Indice seleccionado : " + cbA.getSelectedIndex()); // Actualizo la etiqueta que indica el índice seleccionado de cbA
             }
         }
         else if(e.getSource() == btnQuitar){ // Acciones a realizar cuando se pulsa el botón de quitar elemento de cbA
@@ -169,9 +166,6 @@ public class FrameEjercicio3 extends JFrame implements ActionListener, ItemListe
             if(txf2.getText().equals("")){ // Acciones a realizar si no hay nada escrito en el segundo TextField
                 if(cbA.getSelectedItem() != null){ // Si hay un elemento seleccionado, se elimina del ComboBox
                     cbA.removeItem(cbA.getSelectedItem());
-
-                    lblCantidadElementos.setText("Nº de elementos en el 1er ComboBox : " + cbA.getItemCount()); // Actualizo la etiqueta que cuenta los elementos de cbA
-                    lblIndiceSeleccionado.setText("Indice seleccionado : " + cbA.getSelectedIndex()); // Actualizo la etiqueta que indica el índice seleccionado de cbA
                 }
                 else{ // Si no hay ningún elemento seleccionado, salta un mensaje de error
                     JOptionPane.showMessageDialog(null, "No has seleccionado ningún elemento en el ComboBox!", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -183,8 +177,6 @@ public class FrameEjercicio3 extends JFrame implements ActionListener, ItemListe
                     cbA.setSelectedIndex(i);
                     if(cbA.getSelectedItem().toString().startsWith(txf2.getText())){ // Si hay algún elemento del combobox que empiece por el texto dentro de txf2
                         cbA.removeItem(cbA.getSelectedItem()); // Se eliminará del combobox
-                        lblCantidadElementos.setText("Nº de elementos en el 1er ComboBox : " + cbA.getItemCount()); // Actualizo la etiqueta que cuenta los elementos de cbA
-                        lblIndiceSeleccionado.setText("Indice seleccionado : " + cbA.getSelectedIndex()); // Actualizo la etiqueta que indica el índice seleccionado de cbA
                     }
                 }
 
@@ -195,15 +187,9 @@ public class FrameEjercicio3 extends JFrame implements ActionListener, ItemListe
         }
         else if(e.getSource() == btnTraspasarA){ // Acciones a realizar si se pulsa el botón de trasapasar items del segundo a primer ComboBox
             traspasarItem(cbB, cbA); // Llamo a la función que hace que el item seleccionado de un ComboBox se traspase al otro
-            lblCantidadElementos.setText("Nº de elementos en el 1er ComboBox : " + cbA.getItemCount()); // Actualizo la etiqueta que cuenta los elementos de cbA
-            lblIndiceSeleccionado.setText("Indice seleccionado : " + cbA.getSelectedIndex()); // Actualizo la etiqueta que indica el índice seleccionado de cbA
-            cbB.setToolTipText("Indice seleccionado de ComboBox B: " + cbB.getSelectedIndex()); // Actualizo el ToolTip de cbB
         }
         else if(e.getSource() == btnTraspasarB){
             traspasarItem(cbA, cbB); // Llamo a la función que hace que el item seleccionado de un ComboBox se traspase al otro
-            lblCantidadElementos.setText("Nº de elementos en el 1er ComboBox : " + cbA.getItemCount()); // Actualizo la etiqueta que cuenta los elementos de cbA
-            lblIndiceSeleccionado.setText("Indice seleccionado : " + cbA.getSelectedIndex()); // Actualizo la etiqueta que indica el índice seleccionado de cbA
-            cbB.setToolTipText("Indice seleccionado de ComboBox B: " + cbB.getSelectedIndex()); // Actualizo el ToolTip de cbB
         }
         else if(e.getSource() == temporizador){
             segundos ++;
@@ -220,7 +206,13 @@ public class FrameEjercicio3 extends JFrame implements ActionListener, ItemListe
             }
         }
 
-        segundos = 0; // Reinicio el contador al realizar una acción
+        if(e.getSource() != temporizador){
+            segundos = 0; // Reinicio el contador al realizar una acción que no sea el temporizador
+
+            lblCantidadElementos.setText("Nº de elementos en el 1er ComboBox : " + cbA.getItemCount()); // Actualizo la etiqueta que cuenta los elementos de cbA una acción que no sea el temporizador
+            lblIndiceSeleccionado.setText("Indice seleccionado : " + cbA.getSelectedIndex()); // Actualizo la etiqueta que indica el índice seleccionado de cbA una acción que no sea el temporizador
+            cbB.setToolTipText("Indice seleccionado de ComboBox B: " + cbB.getSelectedIndex()); // Actualizo el ToolTip de cbB una acción que no sea el temporizador
+        }
     }
 
     @Override

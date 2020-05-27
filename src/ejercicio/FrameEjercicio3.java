@@ -172,11 +172,13 @@ public class FrameEjercicio3 extends JFrame implements ActionListener, ItemListe
                 }
             }
             else{ // Acciones a realizar si hay algo escrito en el segundo TextField
-                int elementosDelCB = cbA.getItemCount();
+                int elementosDelCB = cbA.getItemCount(); // Guardo en una variable la cantidad de elementos del ComboBox para que salte un aviso si no se elimina ninguno
+                String elemento;
                 for (int i = 0; i < cbA.getItemCount(); i++) {
-                    cbA.setSelectedIndex(i);
-                    if(cbA.getSelectedItem().toString().startsWith(txf2.getText())){ // Si hay algún elemento del combobox que empiece por el texto dentro de txf2
-                        cbA.removeItem(cbA.getSelectedItem()); // Se eliminará del combobox
+                    elemento = cbA.getItemAt(i).toString();
+                    if(cbA.getItemAt(i).toString().startsWith(txf2.getText())){ // Si hay algún elemento del combobox que empiece por el texto dentro de txf2
+                        cbA.removeItem(cbA.getItemAt(i)); // Se eliminará del combobox
+                        i=-1; // Reinicio la variable i, porque al eliminar un elemento el ComboBox se redimensiona
                     }
                 }
 
